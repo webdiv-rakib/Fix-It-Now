@@ -1,0 +1,46 @@
+{
+  "info": {
+    "_postman_id": "70b61a89-aa5c-4af6-aa38-70364585abf8",
+    "name": "Fix-It-Now-Restart",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "55131488",
+    "_collection_link": "https://go.postman.co/collection/55131488-70b61a89-aa5c-4af6-aa38-70364585abf8?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "User",
+      "item": [
+        {
+          "name": "User Registration",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"John Doe\",\r\n  \"email\": \"customer@example.com\",\r\n  \"password\": \"Password123!\",\r\n  \"phone\": \"+1234567890\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auth/registration",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "auth",
+                "registration"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
