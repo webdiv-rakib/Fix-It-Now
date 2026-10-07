@@ -6,5 +6,10 @@ export interface ICreateUser {
     password: string,
     role?: Role,
     phone: string,
-    address?: string
+    address?: string,
+    bio?: string,
+    experienceYears?: number,
+    skills?: string[],
+    availableSlots?: string[],
+    location?: string
 }

@@ -3,8 +3,6 @@ import express, { Application, Request, Response } from "express";
 import cors from "cors"
 import config from "./config";
 import { prisma } from "./lib/prisma";
-import HttpStatus from "http-status";
-import bcrypt from "bcryptjs";
 import { userRoutes } from "./modules/User/user.routes";
 
 const app: Application = express();
@@ -25,6 +23,7 @@ app.get('/', async (req: Request, res: Response) => {
 });
 
 //all routes
-app.use('/api/auth', userRoutes);
+app.use('/api/auth', userRoutes); // registration routes
+
 
 export default app;
