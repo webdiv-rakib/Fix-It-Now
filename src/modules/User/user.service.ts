@@ -23,7 +23,7 @@ const createUser = async (payload: ICreateUser) => {
             phone
         },
         select: {
-            id: true,
+            userId: true,
             name: true,
             email: true,
             phone: true,
