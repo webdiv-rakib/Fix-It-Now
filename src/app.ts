@@ -27,7 +27,7 @@ app.get('/', async (req: Request, res: Response) => {
 //all routes
 app.use('/api/auth', authRoutes); // jwt access and refresh token routes
 app.use('/api/auth', userRoutes); // registration routes
-app.use('/api/auth/admin', adminRoutes); // admin routes
+app.use('/api/admin', adminRoutes); // admin routes
 
 
 export default app;
