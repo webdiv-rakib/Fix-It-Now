@@ -44,10 +44,24 @@ const allCategories = catchAsync(
             data: categories
         })
     }
-)
+);
+
+const createCategory = catchAsync(
+    async (req, res, next) => {
+        const payload = req.body;
+        const category = await adminService.createCategory(payload);
+        sendResponse(res, {
+            success: true,
+            statusCode: httpStatus.CREATED,
+            message: "Category Created Successfully",
+            data: category
+        })
+    }
+);
 
 export const adminController = {
     getAllUsers,
     userStatusUpdate,
-    allCategories
+    allCategories,
+    createCategory
 }
