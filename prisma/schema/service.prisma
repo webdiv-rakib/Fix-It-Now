@@ -1,0 +1,14 @@
+model Service {
+    serviceId    String            @id @default(uuid())
+    name         String
+    description  String
+    price        Float
+    // Foreign Key for Category
+    categoryId   String
+    category     Category          @relation(fields: [categoryId], references: [categoryId])
+    // Foreign Key for Technician
+    technicianId String
+    technician   TechnicianProfile @relation(fields: [technicianId], references: [technicianId])
+
+    @@map("services")
+}

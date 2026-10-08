@@ -1,0 +1,11 @@
+model Category {
+    categoryId  String    @id @default(uuid())
+    name        String    @unique
+    description String?
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime  @updatedAt
+    // A category can have many services under it
+    services    Service[]
+
+    @@map("categories")
+}
