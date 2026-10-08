@@ -24,8 +24,8 @@ app.get('/', async (req: Request, res: Response) => {
 });
 
 //all routes
+app.use('/api/auth', authRoutes); // jwt access and refresh token routes
 app.use('/api/auth', userRoutes); // registration routes
-app.use('/api/auth', authRoutes);
 
 
 export default app;

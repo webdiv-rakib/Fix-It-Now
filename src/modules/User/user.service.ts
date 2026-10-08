@@ -62,6 +62,22 @@ const createUser = async (payload: ICreateUser) => {
     return user
 };
 
+const getUserProfile = async (userId: string) => {
+    const user = await prisma.user.findUniqueOrThrow({
+        where: {
+            userId: userId
+        },
+        omit: {
+            password: true
+        },
+        include: {
+            technicianProfile: true
+        }
+    })
+    return user
+};
+
 export const userService = {
-    createUser
+    createUser,
+    getUserProfile
 }
