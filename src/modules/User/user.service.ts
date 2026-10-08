@@ -65,7 +65,7 @@ const createUser = async (payload: ICreateUser) => {
 const getUserProfile = async (userId: string) => {
     const user = await prisma.user.findUniqueOrThrow({
         where: {
-            userId: userId // id change as you needed from user databae
+            userId: userId// id change as you needed from user databae
         },
         omit: {
             password: true

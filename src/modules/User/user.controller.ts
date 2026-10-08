@@ -20,17 +20,18 @@ const createUser = catchAsync(
 );
 
 const getUserProfile = catchAsync(
-    async (req, res, next) => {
-        const { accessToken } = req.cookies;
-        const verifyToken = jwtUtils.verifyToken(accessToken, config.jwt_access_secret);
-        if (typeof verifyToken === "string") {
-            throw new Error(verifyToken)
-        };
-        const profile = await userService.getUserProfile(verifyToken.id);
+    async (req: Request, res: Response, next: NextFunction) => {
+        // const cookies = req.cookies
+        const { accessToken } = req.cookies
+        const verifiedToken = jwtUtils.verifyToken(accessToken, config.jwt_access_secret);
+        if (typeof verifiedToken === "string") {
+            throw new Error(verifiedToken)
+        }
+        const profile = await userService.getUserProfile(verifiedToken.id);
         sendResponse(res, {
             success: true,
-            statusCode: httpStatus.OK,
-            message: "User profile retrived successfully",
+            statusCode: httpStatus.CREATED,
+            message: "User fetched Successfully",
             data: { profile }
         })
     }
