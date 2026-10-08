@@ -1,3 +1,4 @@
+import { TechnicianProfile } from './../../../generated/prisma/client';
 import httpStatus from 'http-status';
 import { NextFunction, Request, Response } from 'express';
 import { userService } from './user.service';
@@ -51,6 +52,20 @@ const updateUserProfile = catchAsync(
             data: { updatedProfile }
         });
     }
+);
+
+const technicianProfileUpdate = catchAsync(
+    async (req, res, next) => {
+        const userId = req.user?.id as string;
+        const payload = req.body;
+        const updatedProfile = await userService.technicianProfileUpdate(userId, payload);
+        sendResponse(res, {
+            success: true,
+            statusCode: httpStatus.OK,
+            message: "Technician profile updated successfully",
+            data: updatedProfile
+        });
+    }
 )
 
 
@@ -58,5 +73,6 @@ const updateUserProfile = catchAsync(
 export const userController = {
     createUser,
     getUserProfile,
-    updateUserProfile
+    updateUserProfile,
+    technicianProfileUpdate
 }

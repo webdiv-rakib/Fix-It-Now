@@ -19,3 +19,11 @@ export interface IUpdateProfile {
     phone?: string,
     address?: string
 }
+
+export interface IUpdatedTechnicianProfile {
+    bio?: string,
+    experienceYears?: number,
+    location?: string,
+    skills?: string[],
+    availableSlots?: string[]
+}
