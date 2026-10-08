@@ -22,12 +22,13 @@ const createUser = catchAsync(
 const getUserProfile = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
         // const cookies = req.cookies
-        const { accessToken } = req.cookies
-        const verifiedToken = jwtUtils.verifyToken(accessToken, config.jwt_access_secret);
-        if (typeof verifiedToken === "string") {
-            throw new Error(verifiedToken)
-        }
-        const profile = await userService.getUserProfile(verifiedToken.id);
+        // const { accessToken } = req.cookies;
+        // console.log(req.user, "user request");
+        // const verifiedToken = jwtUtils.verifyToken(accessToken, config.jwt_access_secret);
+        // if (typeof verifiedToken === "string") {
+        //     throw new Error(verifiedToken)
+        // }
+        const profile = await userService.getUserProfile(req.user?.id as string);
         sendResponse(res, {
             success: true,
             statusCode: httpStatus.CREATED,
