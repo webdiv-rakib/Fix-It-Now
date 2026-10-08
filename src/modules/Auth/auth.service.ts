@@ -12,6 +12,9 @@ const loginUser = async (payload: ILogin) => {
             email
         },
     })
+    if (user.status === "BANNED") {
+        throw new Error("Your account has been banned. Please contact support")
+    }
     const isPasswordMatched = await bcrypt.compare(password, user.password);
     if (!isPasswordMatched) {
         throw new Error("Password Incorrect.Please insert correct password")
