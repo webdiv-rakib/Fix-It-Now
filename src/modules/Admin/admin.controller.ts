@@ -32,7 +32,7 @@ const userStatusUpdate = catchAsync(
             data: updateStatus
         })
     }
-)
+);
 
 export const adminController = {
     getAllUsers,
