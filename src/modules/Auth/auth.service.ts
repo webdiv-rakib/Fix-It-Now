@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import { prisma } from "../../lib/prisma";
 import { ILogin } from "./auth.interface";
-import jwt, { SignOptions } from "jsonwebtoken"
+import { SignOptions } from "jsonwebtoken"
 import config from "../../config";
 import { jwtUtils } from "../../utils/jwt";
 
@@ -31,6 +31,7 @@ const loginUser = async (payload: ILogin) => {
         refreshToken
     }
 };
+
 
 export const authService = {
     loginUser
