@@ -3,8 +3,6 @@ import { NextFunction, Request, Response } from 'express';
 import { userService } from './user.service';
 import { catchAsync } from '../../utils/catchAsync';
 import { sendResponse } from '../../utils/sendResponse';
-import { jwtUtils } from '../../utils/jwt';
-import config from '../../config';
 
 const createUser = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
@@ -38,9 +36,27 @@ const getUserProfile = catchAsync(
     }
 );
 
+const updateUserProfile = catchAsync(
+    async (req, res, next) => {
+        const userId = req.user?.id
+        if (!userId) {
+            throw new Error("User ID not found in token. Please log in again.");
+        }
+        const payload = req.body;
+        const updatedProfile = await userService.updateUserProfile(userId, payload);
+        sendResponse(res, {
+            success: true,
+            statusCode: httpStatus.OK,
+            message: "User profile updated successfully",
+            data: { updatedProfile }
+        });
+    }
+)
+
 
 
 export const userController = {
     createUser,
-    getUserProfile
+    getUserProfile,
+    updateUserProfile
 }

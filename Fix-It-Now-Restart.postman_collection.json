@@ -17,7 +17,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"name\": \"John Doe\",\r\n  \"email\": \"customer@example.com\",\r\n  \"password\": \"Password123!\",\r\n  \"phone\": \"+1234567890\"\r\n}",
+              "raw": "{\r\n  \"name\": \"John Doe\",\r\n  \"email\": \"customer20@example.com\",\r\n  \"password\": \"Password123!\",\r\n  \"phone\": \"+1234567890\",\r\n  \"role\":\"TECHNICIAN\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -35,6 +35,62 @@
                 "api",
                 "auth",
                 "registration"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Logged Profile",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/auth/profile",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "auth",
+                "profile"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Auth Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"customer20@example.com\",\r\n    \"password\": \"Password123!\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "auth",
+                "login"
               ]
             }
           },

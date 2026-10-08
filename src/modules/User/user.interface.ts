@@ -13,3 +13,9 @@ export interface ICreateUser {
     availableSlots?: string[],
     location?: string
 }
+
+export interface IUpdateProfile {
+    name?: string,
+    phone?: string,
+    address?: string
+}
