@@ -93,7 +93,7 @@ const updateUserProfile = async (userId: string, payload: IUpdateProfile) => {
         }
     });
     return updatedProfile
-}
+};
 
 const technicianProfileUpdate = async (userId: string, payload: any) => {
     const { availableSlots, bio, experienceYears, location, skills } = payload;
@@ -110,7 +110,7 @@ const technicianProfileUpdate = async (userId: string, payload: any) => {
         },
     });
     return updatedProfile
-}
+};
 
 export const userService = {
     createUser,

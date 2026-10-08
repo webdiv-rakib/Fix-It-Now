@@ -66,7 +66,7 @@ const technicianProfileUpdate = catchAsync(
             data: updatedProfile
         });
     }
-)
+);
 
 
 

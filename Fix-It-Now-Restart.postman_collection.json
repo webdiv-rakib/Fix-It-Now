@@ -17,7 +17,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"name\": \"John Doe\",\r\n  \"email\": \"customer20@example.com\",\r\n  \"password\": \"Password123!\",\r\n  \"phone\": \"+1234567890\",\r\n  \"role\":\"TECHNICIAN\"\r\n}",
+              "raw": "{\r\n  \"name\": \"John Doe 1000\",\r\n  \"email\": \"customer100@example.com\",\r\n  \"password\": \"Password123!\",\r\n  \"phone\": \"+1234567890\",\r\n  \"role\":\"CUSTOMER\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -60,6 +60,96 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "User Profile Update",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"address\": \"123 Main Street, Dhaka\",\r\n    \"phone\": \"01794181719\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auth/update",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "auth",
+                "update"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Technician User Profile",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"address\": \"123 Main Street, Dhaka\",\r\n    \"phone\": \"01794181719\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auth/update",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "auth",
+                "update"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Technician Profile",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"availableSlots\": [\r\n        \"Monday: 09:00 AM - 01:00 PM\",\r\n        \"Wednesday: 02:00 PM - 06:00 PM\",\r\n        \"Friday: 10:00 AM - 05:00 PM\"\r\n    ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auth/technician-profile-update",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "auth",
+                "technician-profile-update"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -67,13 +157,43 @@
       "name": "Auth",
       "item": [
         {
-          "name": "Auth Login",
+          "name": "Auth Login Customer",
           "request": {
             "method": "POST",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"email\": \"customer20@example.com\",\r\n    \"password\": \"Password123!\"\r\n}",
+              "raw": "{\r\n    \"email\": \"customer15@example.com\",\r\n    \"password\": \"Password123!\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Auth Login Technician",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"customer120@example.com\",\r\n    \"password\": \"Password123!\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
