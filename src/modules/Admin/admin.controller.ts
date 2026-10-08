@@ -34,7 +34,20 @@ const userStatusUpdate = catchAsync(
     }
 );
 
+const allCategories = catchAsync(
+    async (req, res, next) => {
+        const categories = await adminService.allCategories();
+        sendResponse(res, {
+            success: true,
+            statusCode: httpStatus.OK,
+            message: "All Category Feteched Successfully",
+            data: categories
+        })
+    }
+)
+
 export const adminController = {
     getAllUsers,
-    userStatusUpdate
+    userStatusUpdate,
+    allCategories
 }

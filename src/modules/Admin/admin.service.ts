@@ -28,7 +28,14 @@ const userStatusUpdate = async (userId: string, status: UserStatus) => {
     return updateStatus
 };
 
+const allCategories = async () => {
+    const categories = await prisma.category.findMany({
+    });
+    return categories
+}
+
 export const adminService = {
     getAllUsers,
     userStatusUpdate,
+    allCategories
 }
