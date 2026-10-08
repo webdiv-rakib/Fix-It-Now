@@ -37,6 +37,7 @@ const getUserProfile = catchAsync(
 );
 
 
+
 export const userController = {
     createUser,
     getUserProfile
