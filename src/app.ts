@@ -32,6 +32,6 @@ app.use('/api/auth', userRoutes); // registration routes
 app.use('/api/admin', adminRoutes); // admin routes
 app.use('/api/technician', serviceRoutes); // technician routes
 app.use('/api/services', serviceRoutes); // service routes
-app.use('/api/booking', bookingRoutes);
+app.use('/api/booking', bookingRoutes); // booking routes
 
 export default app;
