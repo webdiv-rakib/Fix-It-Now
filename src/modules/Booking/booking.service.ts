@@ -86,7 +86,61 @@ const getCustomerBookings = async (customerId: string, filter?: { status?: Booki
     return bookings;
 };
 
+const getTechnicianProfileByUserId = async (userId: string) => {
+    const profile = await prisma.technicianProfile.findUnique({
+        where: { userId }
+    });
+    if (!profile) {
+        throw new Error("Technician profile not found");
+    }
+    return profile;
+};
+
+const getTechnicianBookings = async (
+    userId: string,
+    filter?: { status?: BookingStatus }
+) => {
+    const technicianProfile = await getTechnicianProfileByUserId(userId);
+
+    const whereConditions: { technicianId: string; status?: BookingStatus } = {
+        technicianId: technicianProfile.technicianId
+    };
+
+    if (filter?.status) {
+        whereConditions.status = filter.status;
+    }
+
+    const bookings = await prisma.booking.findMany({
+        where: whereConditions,
+        include: {
+            customer: {
+                select: {
+                    userId: true,
+                    name: true,
+                    email: true,
+                    phone: true,
+                    address: true
+                }
+            },
+            service: {
+                select: {
+                    serviceId: true,
+                    name: true,
+                    price: true
+                }
+            }
+        },
+        orderBy: {
+            createdAt: "desc"
+        }
+    });
+
+    return bookings;
+};
+
 export const bookingService = {
     createBooking,
-    getCustomerBookings
+    getCustomerBookings,
+    getTechnicianProfileByUserId,
+    getTechnicianBookings,
 }
