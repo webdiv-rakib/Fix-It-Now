@@ -69,9 +69,31 @@ const updateBookingStatus = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const cancelCustomerBooking = catchAsync(async (req: Request, res: Response) => {
+    const customerId = req.user?.id as string;
+    const { bookingId } = req.params;
+
+    if (!bookingId) {
+        throw new Error("bookingId parameter is missing from the request URL");
+    }
+
+    const result = await bookingService.cancelCustomerBooking(
+        customerId,
+        bookingId as string
+    );
+
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: "Booking cancelled successfully",
+        data: result
+    });
+});
+
 export const bookingController = {
     createBooking,
     getCustomerBookings,
     getTechnicianBookings,
-    updateBookingStatus
+    updateBookingStatus,
+    cancelCustomerBooking
 }

@@ -151,7 +151,7 @@ const updateBookingStatus = async (
     bookingId: string,
     newStatus: BookingStatus
 ) => {
-    // 1. Resolve technician profile
+
     const technicianProfile = await prisma.technicianProfile.findUnique({
         where: { userId }
     });
@@ -160,7 +160,7 @@ const updateBookingStatus = async (
         throw new Error("Technician profile not found");
     }
 
-    // 2. Fetch the target booking
+
     const existingBooking = await prisma.booking.findUnique({
         where: { bookingId }
     });
@@ -169,12 +169,12 @@ const updateBookingStatus = async (
         throw new Error("Booking not found");
     }
 
-    // 3. Ownership check: verify this technician owns the booking
+
     if (existingBooking.technicianId !== technicianProfile.technicianId) {
         throw new Error("Unauthorized: You are not assigned to this booking");
     }
 
-    // 4. Validate transition
+
     const validNextStates = allowedTransitions[existingBooking.status];
     if (!validNextStates.includes(newStatus)) {
         throw new Error(
@@ -182,7 +182,7 @@ const updateBookingStatus = async (
         );
     }
 
-    // 5. Update record
+
     const updatedBooking = await prisma.booking.update({
         where: { bookingId },
         data: { status: newStatus },
@@ -207,10 +207,48 @@ const updateBookingStatus = async (
     return updatedBooking;
 };
 
+const cancelCustomerBooking = async (customerId: string, bookingId: string) => {
+    const booking = await prisma.booking.findUnique({
+        where: { bookingId }
+    });
+
+    if (!booking) {
+        throw new Error("Booking not found");
+    }
+
+    if (booking.customerId !== customerId) {
+        throw new Error("Unauthorized: You do not own this booking");
+    }
+
+    if (booking.status !== BookingStatus.PENDING) {
+        throw new Error(
+            `Cannot cancel booking: only PENDING bookings can be cancelled (current status: ${booking.status})`
+        );
+    }
+
+    const cancelledBooking = await prisma.booking.update({
+        where: { bookingId },
+        data: {
+            status: BookingStatus.CANCELLED
+        },
+        include: {
+            service: {
+                select: {
+                    name: true,
+                    price: true
+                }
+            }
+        }
+    });
+
+    return cancelledBooking;
+};
+
 export const bookingService = {
     createBooking,
     getCustomerBookings,
     getTechnicianProfileByUserId,
     getTechnicianBookings,
-    updateBookingStatus
+    updateBookingStatus,
+    cancelCustomerBooking
 }
