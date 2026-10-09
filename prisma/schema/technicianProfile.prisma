@@ -11,6 +11,7 @@ model TechnicianProfile {
     createdAt       DateTime  @default(now())
     updatedAt       DateTime  @updatedAt
     services        Service[]
+    bookings        Booking[]
 
     @@map("technician_profiles")
 }

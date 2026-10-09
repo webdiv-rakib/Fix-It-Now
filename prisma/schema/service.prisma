@@ -9,6 +9,7 @@ model Service {
     // Foreign Key for Technician
     technicianId String
     technician   TechnicianProfile @relation(fields: [technicianId], references: [technicianId])
+    bookings     Booking[]
 
     @@map("services")
 }
