@@ -2,6 +2,14 @@ import { BookingStatus } from "../../../generated/prisma/enums";
 import { prisma } from "../../lib/prisma";
 import { ICreateBooking } from "./booking.interface";
 
+const allowedTransitions: Record<BookingStatus, BookingStatus[]> = {
+    [BookingStatus.PENDING]: [BookingStatus.ACCEPTED, BookingStatus.CANCELLED],
+    [BookingStatus.ACCEPTED]: [BookingStatus.IN_PROGRESS, BookingStatus.CANCELLED],
+    [BookingStatus.IN_PROGRESS]: [BookingStatus.COMPLETED, BookingStatus.CANCELLED],
+    [BookingStatus.COMPLETED]: [],
+    [BookingStatus.CANCELLED]: []
+};
+
 const createBooking = async (customerId: string, payload: ICreateBooking) => {
     const service = await prisma.service.findUnique({
         where: {
@@ -138,9 +146,71 @@ const getTechnicianBookings = async (
     return bookings;
 };
 
+const updateBookingStatus = async (
+    userId: string,
+    bookingId: string,
+    newStatus: BookingStatus
+) => {
+    // 1. Resolve technician profile
+    const technicianProfile = await prisma.technicianProfile.findUnique({
+        where: { userId }
+    });
+
+    if (!technicianProfile) {
+        throw new Error("Technician profile not found");
+    }
+
+    // 2. Fetch the target booking
+    const existingBooking = await prisma.booking.findUnique({
+        where: { bookingId }
+    });
+
+    if (!existingBooking) {
+        throw new Error("Booking not found");
+    }
+
+    // 3. Ownership check: verify this technician owns the booking
+    if (existingBooking.technicianId !== technicianProfile.technicianId) {
+        throw new Error("Unauthorized: You are not assigned to this booking");
+    }
+
+    // 4. Validate transition
+    const validNextStates = allowedTransitions[existingBooking.status];
+    if (!validNextStates.includes(newStatus)) {
+        throw new Error(
+            `Invalid status change: cannot transition booking from ${existingBooking.status} to ${newStatus}`
+        );
+    }
+
+    // 5. Update record
+    const updatedBooking = await prisma.booking.update({
+        where: { bookingId },
+        data: { status: newStatus },
+        include: {
+            customer: {
+                select: {
+                    userId: true,
+                    name: true,
+                    email: true,
+                    phone: true
+                }
+            },
+            service: {
+                select: {
+                    name: true,
+                    price: true
+                }
+            }
+        }
+    });
+
+    return updatedBooking;
+};
+
 export const bookingService = {
     createBooking,
     getCustomerBookings,
     getTechnicianProfileByUserId,
     getTechnicianBookings,
+    updateBookingStatus
 }
