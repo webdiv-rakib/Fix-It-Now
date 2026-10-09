@@ -57,9 +57,45 @@ const createReview = async (customerId: string, payload: ICreateReview) => {
         }
     });
     return review;
-}
+};
 
+const getReviewsForTechnician = async (technicianId: string) => {
+    const reviews = await prisma.review.findMany({
+        where: { technicianId },
+        include: {
+            customer: {
+                select: {
+                    userId: true,
+                    name: true
+                }
+            }
+        },
+        orderBy: {
+            createdAt: "desc"
+        }
+    });
+
+    // Calculate average rating
+    const totalReviews = reviews.length;
+    const averageRating =
+        totalReviews > 0
+            ? Number(
+                (
+                    reviews.reduce((acc, curr) => acc + curr.rating, 0) /
+                    totalReviews
+                ).toFixed(1)
+            )
+            : 0;
+
+    return {
+        technicianId,
+        averageRating,
+        totalReviews,
+        reviews
+    };
+};
 
 export const reviewService = {
-    createReview
+    createReview,
+    getReviewsForTechnician
 }

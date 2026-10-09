@@ -19,7 +19,24 @@ const createReview = catchAsync(
     }
 );
 
+const getReviewsForTechnician = catchAsync(async (req: Request, res: Response) => {
+    const { technicianId } = req.params;
+
+    if (!technicianId) {
+        throw new Error("Technician ID parameter is required");
+    }
+
+    const result = await reviewService.getReviewsForTechnician(technicianId as string);
+
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: "Technician reviews fetched successfully",
+        data: result
+    });
+});
 
 export const reviewController = {
-    createReview
+    createReview,
+    getReviewsForTechnician
 }
