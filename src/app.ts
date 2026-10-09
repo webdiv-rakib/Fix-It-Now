@@ -8,6 +8,7 @@ import { authRoutes } from "./modules/Auth/auth.routes";
 import { adminRoutes } from "./modules/Admin/admin.routes";
 import { serviceRoutes } from "./modules/Service/service.routes";
 import { bookingRoutes } from "./modules/Booking/booking.routes";
+import { reviewRoutes } from "./modules/Review/review.routes";
 
 const app: Application = express();
 
@@ -33,5 +34,6 @@ app.use('/api/admin', adminRoutes); // admin routes
 app.use('/api/technician', serviceRoutes); // technician routes
 app.use('/api/services', serviceRoutes); // service routes
 app.use('/api/booking', bookingRoutes); // booking routes
+app.use('/api/reviews', reviewRoutes); // review routes
 
 export default app;

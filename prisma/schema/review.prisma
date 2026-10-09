@@ -9,7 +9,7 @@ model Review {
     updatedAt    DateTime          @updatedAt
     booking      Booking           @relation(fields: [bookingId], references: [bookingId], onDelete: Cascade)
     customer     User              @relation("CustomerReviews", fields: [customerId], references: [userId], onDelete: Cascade)
-    technician   TechnicianProfile @relation(fields: [technicianId], references: [userId], onDelete: Cascade)
+    technician   TechnicianProfile @relation(fields: [technicianId], references: [technicianId], onDelete: Cascade)
 
     @@map("reviews")
 }
