@@ -17,7 +17,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"name\": \"John Doe 1000\",\r\n  \"email\": \"customer100@example.com\",\r\n  \"password\": \"Password123!\",\r\n  \"phone\": \"+1234567890\",\r\n  \"role\":\"CUSTOMER\"\r\n}",
+              "raw": "{\r\n    \"name\": \"anm.rakib\",\r\n    \"email\": \"anm.rakib@gmail.com\",\r\n    \"password\": \"admin1234\",\r\n    \"phone\": \"01794181719\",\r\n    \"role\": \"ADMIN\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -68,7 +68,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"address\": \"123 Main Street, Dhaka\",\r\n    \"phone\": \"01794181719\"\r\n}",
+              "raw": "{\r\n    \"address\": \"Pach Elasin,Delduar,Tangail\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -157,6 +157,36 @@
       "name": "Auth",
       "item": [
         {
+          "name": "Auth Login Admin",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"anm.rakib@gmail.com\",\r\n    \"password\": \"admin1234\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
           "name": "Auth Login Customer",
           "request": {
             "method": "POST",
@@ -164,6 +194,36 @@
             "body": {
               "mode": "raw",
               "raw": "{\r\n    \"email\": \"customer15@example.com\",\r\n    \"password\": \"Password123!\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Auth Login Technician",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"customer20@example.com\",\r\n    \"password\": \"Password123!\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -215,23 +275,19 @@
             }
           },
           "response": []
-        },
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
         {
-          "name": "Auth Login Technician",
+          "name": "Get All Users",
           "request": {
-            "method": "POST",
+            "method": "GET",
             "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"email\": \"customer120@example.com\",\r\n    \"password\": \"Password123!\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
             "url": {
-              "raw": "http://localhost:5000/api/auth/login",
+              "raw": "http://localhost:5000/api/admin/users",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -239,8 +295,185 @@
               "port": "5000",
               "path": [
                 "api",
-                "auth",
-                "login"
+                "admin",
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Categories",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/admin/categories",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "admin",
+                "categories"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Users Status",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"BANNED\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/admin/users/628b9f0b-5d54-4fb7-892d-acbb610b2417",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "admin",
+                "users",
+                "628b9f0b-5d54-4fb7-892d-acbb610b2417"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Category",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"HVAC & AC Repair\",\r\n    \"description\": \"Air conditioning installation, maintenance, and heating system repairs.\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/admin/create-categories",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "admin",
+                "create-categories"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Technician",
+      "item": [
+        {
+          "name": "Create Service",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Fix Leaky Faucet\",\r\n    \"description\": \"I will come and repair any leaky faucet or pipe under the sink.\",\r\n    \"price\": 35.50,\r\n    \"categoryId\": \"49614d98-380d-4259-9692-38e1a8f816f6\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/technician/create-service",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "technician",
+                "create-service"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Service",
+      "item": [
+        {
+          "name": "Get All Services",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/services",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "services"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Booking",
+      "item": [
+        {
+          "name": "Create Booking",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"serviceId\": \"aedf93c5-3e31-4543-96ed-e9aa470289bf\",\r\n  \"scheduleDate\": \"2026-10-15T14:00:00.000Z\",\r\n  \"serviceAddress\": \"123 Elm Street, Apt 4B\",\r\n  \"notes\": \"Please call 10 minutes before arrival.\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/booking/create-booking",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "booking",
+                "create-booking"
               ]
             }
           },
