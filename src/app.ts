@@ -30,5 +30,6 @@ app.use('/api/auth', authRoutes); // jwt access and refresh token routes
 app.use('/api/auth', userRoutes); // registration routes
 app.use('/api/admin', adminRoutes); // admin routes
 app.use('/api/technician', serviceRoutes); // technician routes
+app.use('/api/services', serviceRoutes);
 
 export default app;
