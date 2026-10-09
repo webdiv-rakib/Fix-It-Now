@@ -11,6 +11,7 @@ model User {
     updatedAt         DateTime           @updatedAt
     technicianProfile TechnicianProfile?
     bookings          Booking[]          @relation("CustomerBookings")
+    reviews           Review[]           @relation("CustomerReviews")
 
     @@map("users")
 }

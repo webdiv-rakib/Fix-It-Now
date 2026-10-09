@@ -14,6 +14,7 @@ model Booking {
     customer       User              @relation("CustomerBookings", fields: [customerId], references: [userId], onDelete: Cascade)
     service        Service           @relation(fields: [serviceId], references: [serviceId], onDelete: Cascade)
     technician     TechnicianProfile @relation(fields: [technicianId], references: [technicianId], onDelete: Cascade)
+    review         Review?
 
     @@map("bookings")
 }
