@@ -6,6 +6,7 @@ import { prisma } from "./lib/prisma";
 import { userRoutes } from "./modules/User/user.routes";
 import { authRoutes } from "./modules/Auth/auth.routes";
 import { adminRoutes } from "./modules/Admin/admin.routes";
+import { serviceRoutes } from "./modules/Service/service.routes";
 
 const app: Application = express();
 
@@ -28,6 +29,6 @@ app.get('/', async (req: Request, res: Response) => {
 app.use('/api/auth', authRoutes); // jwt access and refresh token routes
 app.use('/api/auth', userRoutes); // registration routes
 app.use('/api/admin', adminRoutes); // admin routes
-
+app.use('/api/technician', serviceRoutes); // technician routes
 
 export default app;
