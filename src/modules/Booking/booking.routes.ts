@@ -4,7 +4,8 @@ import { auth } from "../../middlewares/auth";
 import { Role } from "../../../generated/prisma/enums";
 
 const router = Router();
-router.get('/', bookingController.getAllServices);
+router.get('/', auth(Role.CUSTOMER), bookingController.getAllServices);
+router.get('/booking-details/:id', auth(Role.CUSTOMER, Role.TECHNICIAN), bookingController.getBookingById);
 router.post('/create-booking', auth(Role.CUSTOMER), bookingController.createBooking);
 router.put('/cancel/:bookingId', auth(Role.CUSTOMER), bookingController.cancelCustomerBooking);
 router.get('/technician-bookings', auth(Role.TECHNICIAN), bookingController.getTechnicianBookings);

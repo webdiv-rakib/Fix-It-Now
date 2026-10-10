@@ -90,10 +90,29 @@ const cancelCustomerBooking = catchAsync(async (req: Request, res: Response) => 
     });
 });
 
+const getBookingById = catchAsync(async (req: Request, res: Response) => {
+    const userId = req.user?.id as string;
+    const { id } = req.params;
+
+    if (!id) {
+        throw new Error("Booking ID parameter is required");
+    }
+
+    const result = await bookingService.getBookingById(userId, id as string);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Booking details fetched successfully",
+        data: result
+    });
+});
+
 export const bookingController = {
     createBooking,
     getAllServices,
     getTechnicianBookings,
     updateBookingStatus,
-    cancelCustomerBooking
+    cancelCustomerBooking,
+    getBookingById
 }

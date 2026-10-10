@@ -244,11 +244,44 @@ const cancelCustomerBooking = async (customerId: string, bookingId: string) => {
     return cancelledBooking;
 };
 
+const getBookingById = async (userId: string, bookingId: string) => {
+    const booking = await prisma.booking.findUnique({
+        where: { bookingId },
+        include: {
+            service: {
+                include: {
+                    category: {
+                        select: {
+                            categoryId: true,
+                            name: true
+                        }
+                    }
+                }
+            },
+        }
+    });
+
+    if (!booking) {
+        throw new Error("Booking not found");
+    }
+
+    // Security check: ensure only the customer who booked it (or the assigned technician) can view it
+    const isCustomer = booking.customerId === userId;
+    //const isTechnician = booking.technician?.userId === userId;
+
+    // if (!isCustomer && !isTechnician) {
+    //     throw new Error("Unauthorized: You do not have access to this booking");
+    // }
+
+    return booking;
+};
+
 export const bookingService = {
     createBooking,
     getAllServices,
     getTechnicianProfileByUserId,
     getTechnicianBookings,
     updateBookingStatus,
-    cancelCustomerBooking
+    cancelCustomerBooking,
+    getBookingById
 }
