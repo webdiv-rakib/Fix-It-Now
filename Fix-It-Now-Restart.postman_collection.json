@@ -478,6 +478,174 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/booking",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "booking"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Technician Booking",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/booking/technician-bookings",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "booking",
+                "technician-bookings"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Technician Update Booking Status",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\":\"COMPLETED\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/booking/update-booking-status/e44bf38f-a11c-4358-897c-5f52fce7c51c",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "booking",
+                "update-booking-status",
+                "e44bf38f-a11c-4358-897c-5f52fce7c51c"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Customer Can Update Booking Status",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\":\"CANCELLED\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/booking/cancel/a09c196b-5f9e-4147-91b6-73dcabbbbf8c",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "booking",
+                "cancel",
+                "a09c196b-5f9e-4147-91b6-73dcabbbbf8c"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Review",
+      "item": [
+        {
+          "name": "Create Review",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"bookingId\": \"e44bf38f-a11c-4358-897c-5f52fce7c51c\",\r\n  \"rating\": 4,\r\n  \"comment\": \"Fixed the issue quickly and professionally!\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/reviews",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "reviews"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Technician Review",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"bookingId\": \"a09c196b-5f9e-4147-91b6-73dcabbbbf8c\",\r\n  \"rating\": 5,\r\n  \"comment\": \"Fixed the issue quickly and professionally!\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/reviews/technician/5efaa5a9-9f0d-4a6f-8a59-cd87c3c2962c",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "reviews",
+                "technician",
+                "5efaa5a9-9f0d-4a6f-8a59-cd87c3c2962c"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     }
