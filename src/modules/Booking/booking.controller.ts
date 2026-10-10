@@ -20,11 +20,11 @@ const createBooking = catchAsync(
     }
 );
 
-const getCustomerBookings = catchAsync(
+const getAllServices = catchAsync(
     async (req, res, next) => {
         const customerId = req.user?.id as string;
         const { status } = req.query;
-        const bookings = await bookingService.getCustomerBookings(customerId, { status: status as BookingStatus });
+        const bookings = await bookingService.getAllServices(customerId, { status: status as BookingStatus });
         sendResponse(res, {
             success: true,
             statusCode: httpStatus.OK,
@@ -92,7 +92,7 @@ const cancelCustomerBooking = catchAsync(async (req: Request, res: Response) => 
 
 export const bookingController = {
     createBooking,
-    getCustomerBookings,
+    getAllServices,
     getTechnicianBookings,
     updateBookingStatus,
     cancelCustomerBooking

@@ -51,7 +51,7 @@ const createBooking = async (customerId: string, payload: ICreateBooking) => {
     return booking
 };
 
-const getCustomerBookings = async (customerId: string, filter?: { status?: BookingStatus }) => {
+const getAllServices = async (customerId: string, filter?: { status?: BookingStatus }) => {
     const whereConditions: { customerId: string; status?: BookingStatus } = {
         customerId,
     };
@@ -246,7 +246,7 @@ const cancelCustomerBooking = async (customerId: string, bookingId: string) => {
 
 export const bookingService = {
     createBooking,
-    getCustomerBookings,
+    getAllServices,
     getTechnicianProfileByUserId,
     getTechnicianBookings,
     updateBookingStatus,

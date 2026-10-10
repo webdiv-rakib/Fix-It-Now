@@ -30,10 +30,10 @@ app.get('/', async (req: Request, res: Response) => {
 //all routes
 app.use('/api/auth', authRoutes); // jwt access and refresh token routes
 app.use('/api/auth', userRoutes); // registration routes
+app.use('/api', adminRoutes);
 app.use('/api/admin', adminRoutes); // admin routes
 app.use('/api/technician', serviceRoutes); // technician routes
 app.use('/api/services', serviceRoutes); // service routes
 app.use('/api/booking', bookingRoutes); // booking routes
 app.use('/api/reviews', reviewRoutes); // review routes
-
 export default app;
