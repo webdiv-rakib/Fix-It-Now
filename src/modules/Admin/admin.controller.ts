@@ -3,6 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import { catchAsync } from "../../utils/catchAsync";
 import { adminService } from "./admin.service";
 import { sendResponse } from "../../utils/sendResponse";
+import { BookingStatus } from '../../../generated/prisma/enums';
 
 const getAllUsers = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
@@ -59,9 +60,28 @@ const createCategory = catchAsync(
     }
 );
 
+const getAllBookings = catchAsync(async (req: Request, res: Response) => {
+    const query = {
+        status: req.query.status as BookingStatus,
+        page: req.query.page ? Number(req.query.page) : 1,
+        limit: req.query.limit ? Number(req.query.limit) : 10
+    };
+
+    const result = await adminService.getAllBookingsForAdmin(query);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "All platform bookings fetched successfully",
+        meta: result.meta,
+        data: result.data
+    });
+});
+
 export const adminController = {
     getAllUsers,
     userStatusUpdate,
     allCategories,
-    createCategory
+    createCategory,
+    getAllBookings
 }
