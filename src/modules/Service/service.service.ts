@@ -1,6 +1,6 @@
 import { Prisma } from "../../../generated/prisma/browser";
 import { prisma } from "../../lib/prisma";
-import { ICreateService, IServiceFilters } from "./service.interface";
+import { ICreateService, IServiceFilters, ITechnicianFilters } from "./service.interface";
 
 const createService = async (userId: string, payload: ICreateService) => {
     const technicianProfile = await prisma.technicianProfile.findUnique({
@@ -89,8 +89,71 @@ const getAllServices = async (filters: IServiceFilters) => {
     return services;
 };
 
+const getAllTechnicians = async (filters: ITechnicianFilters) => {
+    const { skills, location, rating } = filters;
+    const andConditions: Prisma.TechnicianProfileWhereInput[] = [];
+    if (skills) {
+        andConditions.push({
+            skills: {
+                has: skills
+            }
+        });
+    }
+    if (location) {
+        andConditions.push({
+            user: {
+                address: {
+                    contains: location,
+                    mode: "insensitive"
+                }
+            }
+        });
+    }
+    if (rating) {
+        andConditions.push({
+            rating: {
+                gte: Number(rating)
+            }
+        });
+    }
+
+    const whereConditions: Prisma.TechnicianProfileWhereInput =
+        andConditions.length > 0 ? { AND: andConditions } : {};
+
+    const technicians = await prisma.technicianProfile.findMany({
+        where: whereConditions,
+        include: {
+            user: {
+                select: {
+                    userId: true,
+                    name: true,
+                    email: true,
+                    phone: true,
+                    address: true
+                }
+            },
+            reviews: {
+                select: {
+                    rating: true,
+                    comment: true,
+                    createdAt: true
+                },
+                take: 5,
+                orderBy: {
+                    createdAt: "desc"
+                }
+            }
+        },
+        orderBy: {
+            rating: "desc"
+        }
+    });
+
+    return technicians;
+};
 
 export const serviceService = {
     createService,
-    getAllServices
+    getAllServices,
+    getAllTechnicians
 }

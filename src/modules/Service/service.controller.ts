@@ -35,7 +35,25 @@ const getAllServices = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const getAllTechnicians = catchAsync(async (req: Request, res: Response) => {
+    const filters = {
+        skills: req.query.skills as string,
+        location: req.query.location as string,
+        rating: req.query.rating ? Number(req.query.rating) : undefined
+    };
+
+    const result = await serviceService.getAllTechnicians(filters);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Technicians fetched successfully",
+        data: result
+    });
+});
+
 export const serviceController = {
     createService,
-    getAllServices
+    getAllServices,
+    getAllTechnicians
 }
