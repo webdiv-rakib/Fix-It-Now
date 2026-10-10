@@ -12,6 +12,7 @@ model User {
     technicianProfile TechnicianProfile?
     bookings          Booking[]          @relation("CustomerBookings")
     reviews           Review[]           @relation("CustomerReviews")
+    payments          Payment[]          @relation("CustomerPayments")
 
     @@map("users")
 }
