@@ -4,3 +4,9 @@ export interface ICreateService {
     price: number;
     categoryId: string;
 }
+
+export interface IServiceFilters {
+    type?: string;
+    location?: string;   
+    rating?: number;     
+}

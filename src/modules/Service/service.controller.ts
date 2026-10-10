@@ -18,18 +18,22 @@ const createService = catchAsync(
     }
 );
 
-const getAllServices = catchAsync(
-    async (req, res, next) => {
-        const query = req.query
-        const services = await serviceService.getAllServices(query);
-        sendResponse(res, {
-            success: true,
-            statusCode: httpStatus.OK,
-            message: "Services fetched successfully",
-            data: services
-        });
-    }
-);
+const getAllServices = catchAsync(async (req: Request, res: Response) => {
+    const filters = {
+        type: req.query.type as string,
+        location: req.query.location as string,
+        rating: req.query.rating ? Number(req.query.rating) : undefined
+    };
+
+    const services = await serviceService.getAllServices(filters);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Services fetched successfully",
+        data: services
+    });
+});
 
 export const serviceController = {
     createService,

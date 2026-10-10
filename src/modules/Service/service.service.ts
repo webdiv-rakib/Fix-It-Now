@@ -1,5 +1,6 @@
+import { Prisma } from "../../../generated/prisma/browser";
 import { prisma } from "../../lib/prisma";
-import { ICreateService } from "./service.interface";
+import { ICreateService, IServiceFilters } from "./service.interface";
 
 const createService = async (userId: string, payload: ICreateService) => {
     const technicianProfile = await prisma.technicianProfile.findUnique({
@@ -22,39 +23,67 @@ const createService = async (userId: string, payload: ICreateService) => {
     return newService
 };
 
-const getAllServices = async (query: any) => {
-    const { searchTerm, categoryId } = query;
-    const whereConditions: any = {};
-    if (searchTerm) {
-        whereConditions.OR = [
-            { name: { contains: searchTerm, mode: 'insensitive' } },
-            { description: { contains: searchTerm, mode: 'insensitive' } }
-        ];
+const getAllServices = async (filters: IServiceFilters) => {
+    const { type, location, rating } = filters;
+    const andConditions: Prisma.ServiceWhereInput[] = [];
+    if (type) {
+        andConditions.push({
+            OR: [
+                { categoryId: type },
+                {
+                    category: {
+                        name: { contains: type, mode: "insensitive" }
+                    }
+                }
+            ]
+        });
     }
-    if (categoryId) {
-        whereConditions.categoryId = categoryId;
+    if (location) {
+        andConditions.push({
+            technician: {
+                OR: [
+                    {
+                        user: {
+                            address: { contains: location, mode: "insensitive" }
+                        }
+                    }
+                ]
+            }
+        });
     }
+    if (rating) {
+        andConditions.push({
+            technician: {
+                rating: { gte: Number(rating) }
+            }
+        });
+    }
+
+    const whereConditions: Prisma.ServiceWhereInput =
+        andConditions.length > 0 ? { AND: andConditions } : {};
+
     const services = await prisma.service.findMany({
         where: whereConditions,
         include: {
-            // Bring in the category name
             category: {
                 select: {
+                    categoryId: true,
                     name: true
                 }
             },
-            // Bring in the technician profile AND their actual user name
             technician: {
                 include: {
                     user: {
                         select: {
                             name: true,
-                            email: true
+                            email: true,
+                            phone: true,
+                            address: true
                         }
                     }
                 }
             }
-        },
+        }
     });
 
     return services;
