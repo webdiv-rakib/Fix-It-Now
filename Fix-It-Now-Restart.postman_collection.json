@@ -193,7 +193,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"email\": \"customer15@example.com\",\r\n    \"password\": \"Password123!\"\r\n}",
+              "raw": "{\r\n    \"email\": \"rakibcustomer@gmail.com\",\r\n    \"password\": \"rakibcustomer\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -223,7 +223,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"email\": \"anm.rakib24@gmail.com\",\r\n    \"password\": \"admin1234\"\r\n}",
+              "raw": "{\r\n    \"email\": \"technician-1@gmail.com\",\r\n    \"password\": \"technician-1\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -396,7 +396,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"name\": \"Pipe Leakage & Drainage Repair\",\r\n    \"description\": \"Complete repair of bathroom and kitchen pipe leaks, clogged drain clearing, and faucet replacement.\",\r\n    \"price\": 45.00,\r\n    \"categoryId\": \"6ddc9823-19a0-4698-874c-278df5efb096\"\r\n}",
+              "raw": "{\r\n    \"name\": \"Fridge Repair\",\r\n    \"description\": \"Complete repair any problem.\",\r\n    \"price\": 145.00,\r\n    \"categoryId\": \"f2c046cf-8af8-46d6-aaac-0dea6f9a9d73\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -659,7 +659,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"name\": \"anm.rakib customer\",\r\n    \"email\": \"anm.rakib1@gmail.com\",\r\n    \"password\": \"admin1234\",\r\n    \"phone\": \"01794181719\",\r\n    \"role\": \"CUSTOMER\"\r\n}",
+              "raw": "{\r\n    \"name\": \"rakib customer\",\r\n    \"email\": \"rakibcustomer@gmail.com\",\r\n    \"password\": \"rakibcustomer\",\r\n    \"phone\": \"01794181719\",\r\n    \"role\": \"CUSTOMER\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -853,7 +853,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"serviceId\": \"aedf93c5-3e31-4543-96ed-e9aa470289bf\",\r\n    \"scheduleDate\": \"2026-10-15T14:00:00.000Z\",\r\n    \"serviceAddress\": \"123 Elm Street, Apt 4B\",\r\n    \"notes\": \"Please call 10 minutes before arrival.\"\r\n}",
+              "raw": "{\r\n    \"serviceId\": \"201d966d-0fa0-4d74-bd8d-d93edaf3b847\",\r\n    \"scheduleDate\": \"2026-10-15T14:00:00.000Z\",\r\n    \"serviceAddress\": \"123 Elm Street, Apt 4B\",\r\n    \"notes\": \"Please call 10 minutes before arrival.\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -928,8 +928,27 @@
           "request": {
             "method": "POST",
             "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"bookingId\": \"93af00e0-bdbc-463b-845e-4ae64244b8f0\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
-              "raw": ""
+              "raw": "http://localhost:5000/api/payments/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "payments",
+                "create"
+              ]
             }
           },
           "response": []
@@ -939,8 +958,27 @@
           "request": {
             "method": "POST",
             "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"sessionId\": \"cs_test_a1v9vWwZUW9B6fXslvYDcpNPelSnHtgVEHdHxSdkv1RDzI0izwYhF8MVCU\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
-              "raw": ""
+              "raw": "http://localhost:5000/api/payments/confirm",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "payments",
+                "confirm"
+              ]
             }
           },
           "response": []
@@ -951,7 +989,16 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": ""
+              "raw": "http://localhost:5000/api/payments",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "payments"
+              ]
             }
           },
           "response": []
@@ -962,7 +1009,17 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": ""
+              "raw": "http://localhost:5000/api/payments/1f82299b-3ac0-490e-b3a9-f4df7aa5330b",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "payments",
+                "1f82299b-3ac0-490e-b3a9-f4df7aa5330b"
+              ]
             }
           },
           "response": []
@@ -1090,7 +1147,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"status\":\"COMPLETED\"\r\n}",
+              "raw": "{\r\n    \"status\":\"ACCEPTED\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1098,7 +1155,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:5000/api/booking/update-booking-status/97881106-d295-4e3c-8a93-ac7d14f750ff",
+              "raw": "http://localhost:5000/api/booking/update-booking-status/93af00e0-bdbc-463b-845e-4ae64244b8f0",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -1108,7 +1165,7 @@
                 "api",
                 "booking",
                 "update-booking-status",
-                "97881106-d295-4e3c-8a93-ac7d14f750ff"
+                "93af00e0-bdbc-463b-845e-4ae64244b8f0"
               ]
             }
           },
