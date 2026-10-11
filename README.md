@@ -90,3 +90,68 @@ cd fix-it-now-backend
 
 5. npm run build
 npm start
+
+### 🔐 Authentication (`/api/auth`)
+
+| Method | Endpoint | Access | Description |
+| :--- | :--- | :--- | :--- |
+| `POST` | `/api/auth/register` | Public | Register new user (`CUSTOMER`, `TECHNICIAN`) |
+| `POST` | `/api/auth/login` | Public | Authenticate user & return JWT token |
+| `GET` | `/api/auth/me` | Authenticated | Retrieve current authenticated user profile |
+
+---
+
+### 🔍 Services & Technicians (Public)
+
+| Method | Endpoint | Access | Description |
+| :--- | :--- | :--- | :--- |
+| `GET` | `/api/services` | Public | Filter services by `type`, `location`, `rating` |
+| `GET` | `/api/services/:id` | Public | Get single service details |
+| `GET` | `/api/technicians` | Public | Filter technicians by `skills`, `location`, `rating` |
+| `GET` | `/api/technicians/:id` | Public | View technician profile and recent reviews |
+| `GET` | `/api/categories` | Public | View all service categories |
+
+---
+
+### 📅 Bookings (`/api/bookings`)
+
+| Method | Endpoint | Access | Description |
+| :--- | :--- | :--- | :--- |
+| `POST` | `/api/bookings` | Customer | Create a new service booking |
+| `GET` | `/api/bookings` | Customer | Get customer's booking history |
+| `GET` | `/api/bookings/:id` | Customer / Tech | Get detailed view of a specific booking |
+| `PUT` | `/api/bookings/cancel/:id` | Customer | Cancel pending booking (before `IN_PROGRESS`) |
+| `GET` | `/api/bookings/technician-bookings` | Technician | View assigned jobs |
+| `PUT` | `/api/bookings/update-booking-status/:id` | Technician | Update status (`ACCEPTED`, `IN_PROGRESS`, `COMPLETED`) |
+
+---
+
+### 💳 Payments (`/api/payments`)
+
+| Method | Endpoint | Access | Description |
+| :--- | :--- | :--- | :--- |
+| `POST` | `/api/payments/create` | Customer | Generate Stripe checkout session for accepted job |
+| `POST` | `/api/payments/confirm` | Customer | Verify completed Stripe session & advance status |
+| `GET` | `/api/payments` | Customer | Get customer payment history |
+| `GET` | `/api/payments/:id` | Customer / Admin | Get specific payment transaction receipt |
+
+---
+
+### ⭐ Reviews (`/api/reviews`)
+
+| Method | Endpoint | Access | Description |
+| :--- | :--- | :--- | :--- |
+| `POST` | `/api/reviews` | Customer | Review a completed booking (1–5 rating + comment) |
+| `GET` | `/api/reviews/technician/:id` | Public | Fetch all reviews and aggregate score for a technician |
+
+---
+
+### 🛡️ Admin Moderation (`/api/admin`)
+
+| Method | Endpoint | Access | Description |
+| :--- | :--- | :--- | :--- |
+| `GET` | `/api/admin/users` | Admin | Get list of all registered platform users |
+| `PATCH` | `/api/admin/users/:id` | Admin | Update user account status (ban / unban) |
+| `GET` | `/api/admin/bookings` | Admin | Get all platform bookings with status filters |
+| `GET` | `/api/admin/categories` | Admin | List all categories |
+| `POST` | `/api/admin/categories` | Admin | Create a new service category |
