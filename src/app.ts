@@ -2,7 +2,6 @@ import cookieParser from "cookie-parser";
 import express, { Application, Request, Response } from "express";
 import cors from "cors"
 import config from "./config";
-import { prisma } from "./lib/prisma";
 import { userRoutes } from "./modules/User/user.routes";
 import { authRoutes } from "./modules/Auth/auth.routes";
 import { adminRoutes } from "./modules/Admin/admin.routes";
@@ -25,13 +24,15 @@ app.use(cors({
 app.get('/', async (req: Request, res: Response) => {
     // const user = await prisma.user.findMany();
     // console.log(user);
-    res.send("Hellow World!")
+    res.status(200).json({
+        success: true,
+        message: "FixItNow Server is Running!"
+    });
 });
 
 //all routes
 app.use('/api/auth', authRoutes); // jwt access and refresh token routes
 app.use('/api/auth', userRoutes); // registration routes
-app.use('/api', adminRoutes);
 app.use('/api/admin', adminRoutes); // admin routes
 app.use('/api/technician', serviceRoutes); // technician routes
 app.use('/api/services', serviceRoutes); // service routes
