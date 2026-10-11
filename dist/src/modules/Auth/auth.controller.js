@@ -1,0 +1,47 @@
+import httpStatus from 'http-status';
+import { catchAsync } from "../../utils/catchAsync";
+import { authService } from "./auth.service";
+import { sendResponse } from "../../utils/sendResponse";
+const loginUser = catchAsync(async (req, res, next) => {
+    const payload = req.body;
+    const { accessToken, refreshToken } = await authService.loginUser(payload);
+    res.cookie("accessToken", accessToken, {
+        httpOnly: true,
+        secure: false,
+        sameSite: "none",
+        maxAge: 1000 * 60 * 60 * 24
+    });
+    res.cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: false,
+        sameSite: "none",
+        maxAge: 1000 * 60 * 60 * 24 * 7
+    });
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: "User Logged in Successfully",
+        data: { accessToken, refreshToken }
+    });
+});
+const refreshToken = catchAsync(async (req, res, next) => {
+    const refreshToken = req.cookies.refreshToken;
+    const { accessToken } = await authService.refreshToken(refreshToken);
+    res.cookie("accessToken", accessToken, {
+        httpOnly: true,
+        secure: false,
+        sameSite: "none",
+        maxAge: 1000 * 60 * 60 * 24
+    });
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: "TOken Refresh Successfully",
+        data: { accessToken }
+    });
+});
+export const authController = {
+    loginUser,
+    refreshToken
+};
+//# sourceMappingURL=auth.controller.js.map

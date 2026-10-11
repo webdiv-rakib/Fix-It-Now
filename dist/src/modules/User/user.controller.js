@@ -1,0 +1,62 @@
+import httpStatus from 'http-status';
+import { userService } from './user.service';
+import { catchAsync } from '../../utils/catchAsync';
+import { sendResponse } from '../../utils/sendResponse';
+const createUser = catchAsync(async (req, res, next) => {
+    const payload = req.body;
+    const userData = await userService.createUser(payload);
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.CREATED,
+        message: "User Registered Successfully",
+        data: { userData }
+    });
+});
+const getUserProfile = catchAsync(async (req, res, next) => {
+    // const cookies = req.cookies
+    // const { accessToken } = req.cookies;
+    // console.log(req.user, "user request");
+    // const verifiedToken = jwtUtils.verifyToken(accessToken, config.jwt_access_secret);
+    // if (typeof verifiedToken === "string") {
+    //     throw new Error(verifiedToken)
+    // }
+    const profile = await userService.getUserProfile(req.user?.id);
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.CREATED,
+        message: "User fetched Successfully",
+        data: { profile }
+    });
+});
+const updateUserProfile = catchAsync(async (req, res, next) => {
+    const userId = req.user?.id;
+    if (!userId) {
+        throw new Error("User ID not found in token. Please log in again.");
+    }
+    const payload = req.body;
+    const updatedProfile = await userService.updateUserProfile(userId, payload);
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: "User profile updated successfully",
+        data: { updatedProfile }
+    });
+});
+const technicianProfileUpdate = catchAsync(async (req, res, next) => {
+    const userId = req.user?.id;
+    const payload = req.body;
+    const updatedProfile = await userService.technicianProfileUpdate(userId, payload);
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: "Technician profile updated successfully",
+        data: updatedProfile
+    });
+});
+export const userController = {
+    createUser,
+    getUserProfile,
+    updateUserProfile,
+    technicianProfileUpdate
+};
+//# sourceMappingURL=user.controller.js.map

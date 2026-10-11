@@ -1,6 +1,6 @@
-dist
-node_modules
-.env
-/generated/prisma
+# dist
+# node_modules
+# .env
+# /generated/prisma
 
-.vercel
+# .vercel
