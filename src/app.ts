@@ -23,8 +23,8 @@ app.use(cors({
 }))
 
 app.get('/', async (req: Request, res: Response) => {
-    const user = await prisma.user.findMany();
-    console.log(user);
+    // const user = await prisma.user.findMany();
+    // console.log(user);
     res.send("Hellow World!")
 });
 
