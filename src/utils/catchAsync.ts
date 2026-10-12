@@ -12,7 +12,7 @@ export const catchAsync = (fn: RequestHandler) => {
                 message: "Filed To Register User",
                 error: (error as Error).message
             });
-            next()
+            // next()
         }
     }
 }

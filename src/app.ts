@@ -9,6 +9,7 @@ import { serviceRoutes } from "./modules/Service/service.routes";
 import { bookingRoutes } from "./modules/Booking/booking.routes";
 import { reviewRoutes } from "./modules/Review/review.routes";
 import { paymentRoutes } from "./modules/Payment/payment.routes";
+import { notFound } from "./middlewares/notFound";
 
 const app: Application = express();
 
@@ -39,4 +40,7 @@ app.use('/api/services', serviceRoutes); // service routes
 app.use('/api/booking', bookingRoutes); // booking routes
 app.use('/api/reviews', reviewRoutes); // review routes
 app.use('/api/payments', paymentRoutes); // payment routes
+
+app.use(notFound);
+
 export default app;
