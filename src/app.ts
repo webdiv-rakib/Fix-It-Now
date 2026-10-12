@@ -1,5 +1,6 @@
+import httpStatus from 'http-status';
 import cookieParser from "cookie-parser";
-import express, { Application, Request, Response } from "express";
+import express, { Application, NextFunction, Request, Response } from "express";
 import cors from "cors"
 import config from "./config";
 import { userRoutes } from "./modules/User/user.routes";
@@ -10,6 +11,7 @@ import { bookingRoutes } from "./modules/Booking/booking.routes";
 import { reviewRoutes } from "./modules/Review/review.routes";
 import { paymentRoutes } from "./modules/Payment/payment.routes";
 import { notFound } from "./middlewares/notFound";
+import { globalErrorHandler } from './middlewares/globalErrorHandler';
 
 const app: Application = express();
 
@@ -42,5 +44,6 @@ app.use('/api/reviews', reviewRoutes); // review routes
 app.use('/api/payments', paymentRoutes); // payment routes
 
 app.use(notFound);
+app.use(globalErrorHandler);
 
 export default app;
