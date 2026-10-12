@@ -10,9 +10,9 @@ const createUser = async (payload: ICreateUser) => {
             email
         }
     });
-    if (isUserExists) {
-        throw new Error("User Already Exists")
-    };
+    // if (isUserExists) {
+    //     throw new Error("User Already Exists")
+    // };
     const hashedPassword = await bcrypt.hash(password, Number(config.bcrypt_salt_rounds));
 
     const createdUser = await prisma.user.create({
