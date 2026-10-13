@@ -29,7 +29,7 @@ const createPaymentSession = async (customerId: string, bookingId: string) => {
 
     const clientUrl = process.env.CLIENT_URL || "http://localhost:3000";
 
-    // Create Stripe Checkout Session
+    // stripe Checkout Session
     const session = await stripe.checkout.sessions.create({
         mode: "payment",
         customer_email: (await prisma.user.findUnique({ where: { userId: customerId } }))?.email,
@@ -54,7 +54,7 @@ const createPaymentSession = async (customerId: string, bookingId: string) => {
         }
     });
 
-    // Create or update pending payment record
+    // update pending payment record
     await prisma.payment.upsert({
         where: { bookingId },
         update: {
@@ -91,7 +91,6 @@ const confirmPayment = async (sessionId: string) => {
     }
 
     const updatedPayment = await prisma.$transaction(async (tx) => {
-        // Mark payment COMPLETED
         const payment = await tx.payment.update({
             where: { bookingId },
             data: {
@@ -99,9 +98,6 @@ const confirmPayment = async (sessionId: string) => {
                 paidAt: new Date()
             }
         });
-
-        // Advance booking status (PAID / IN_PROGRESS)
-        // If your enum has PAID, use BookingStatus.PAID; otherwise IN_PROGRESS
         await tx.booking.update({
             where: { bookingId },
             data: {

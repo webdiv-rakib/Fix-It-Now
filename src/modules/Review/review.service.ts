@@ -5,12 +5,12 @@ import { ICreateReview } from "./review.interface"
 const createReview = async (customerId: string, payload: ICreateReview) => {
     const { bookingId, rating, comment } = payload;
 
-    // 1. Validate rating range
+    // Validate rating range
     if (!rating || rating < 1 || rating > 5) {
         throw new Error("Rating must be an integer between 1 and 5");
     }
 
-    // 2. Look up the booking
+    // Look up the booking
     const booking = await prisma.booking.findUnique({
         where: { bookingId },
         include: {
@@ -23,7 +23,7 @@ const createReview = async (customerId: string, payload: ICreateReview) => {
         throw new Error("Booking not found");
     }
 
-    // 3. Authorization & Status checks
+    // authorization & Status checks
     if (booking.customerId !== customerId) {
         throw new Error("Unauthorized: You can only review your own bookings");
     }
@@ -39,10 +39,8 @@ const createReview = async (customerId: string, payload: ICreateReview) => {
     }
 
     const targetTechnicianId = booking.technician.technicianId;
-
-    // 4. Run creation and rating update in a transaction
     const result = await prisma.$transaction(async (tx) => {
-        // A. Create the review
+        // create the review
         const newReview = await tx.review.create({
             data: {
                 bookingId,
@@ -61,7 +59,7 @@ const createReview = async (customerId: string, payload: ICreateReview) => {
             }
         });
 
-        // B. Calculate the new aggregate average rating
+        // calculate the new aggregate average rating
         const aggregate = await tx.review.aggregate({
             where: {
                 technicianId: targetTechnicianId
@@ -78,7 +76,7 @@ const createReview = async (customerId: string, payload: ICreateReview) => {
             ? Number(aggregate._avg.rating.toFixed(1))
             : 0;
 
-        // C. Update the technician profile
+        // update the technician profile
         await tx.technicianProfile.update({
             where: {
                 technicianId: targetTechnicianId
@@ -110,7 +108,7 @@ const getReviewsForTechnician = async (technicianId: string) => {
         }
     });
 
-    // Calculate average rating
+    // calculate average rating
     const totalReviews = reviews.length;
     const averageRating =
         totalReviews > 0
