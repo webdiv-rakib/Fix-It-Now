@@ -152,8 +152,27 @@ const getAllTechnicians = async (filters: ITechnicianFilters) => {
     return technicians;
 };
 
+const getServiceById = async (id: string) => {
+    const result = await prisma.service.findUnique({
+        where: {
+            serviceId: id,
+        },
+        include: {
+            category: true,
+            technician: {
+                include: {
+                    user: true,
+                },
+            },
+        },
+    });
+
+    return result;
+};
+
 export const serviceService = {
     createService,
     getAllServices,
-    getAllTechnicians
+    getAllTechnicians,
+    getServiceById
 }

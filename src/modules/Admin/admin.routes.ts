@@ -6,6 +6,7 @@ import { auth } from "../../middlewares/auth";
 const router = Router();
 
 router.get('/users', auth(Role.ADMIN), adminController.getAllUsers);
+router.get('/overview', auth(Role.ADMIN), adminController.getOverviewStats);
 router.patch('/users/:userId', auth(Role.ADMIN), adminController.userStatusUpdate);
 router.get("/bookings", auth(Role.ADMIN), adminController.getAllBookings);
 router.get('/categories', adminController.allCategories);

@@ -4,6 +4,7 @@ import { catchAsync } from "../../utils/catchAsync";
 import { adminService } from "./admin.service";
 import { sendResponse } from "../../utils/sendResponse";
 import { BookingStatus } from '../../../generated/prisma/enums';
+import { prisma } from '../../lib/prisma';
 
 const getAllUsers = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
@@ -78,10 +79,71 @@ const getAllBookings = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+export const getOverviewStats = catchAsync(async (req: Request, res: Response) => {
+    const [totalUsers, totalTechnicians, totalBookings, completedBookings, recentBookings] =
+        await Promise.all([
+            prisma.user.count({ where: { role: "CUSTOMER" } }),
+            prisma.user.count({ where: { role: "TECHNICIAN" } }),
+            prisma.booking.count(),
+            prisma.booking.findMany({
+                where: { status: "COMPLETED" },
+                include: { service: true },
+            }),
+            prisma.booking.findMany({
+                take: 6,
+                orderBy: { createdAt: "desc" },
+                include: {
+                    customer: {
+                        select: {
+                            userId: true,
+                            name: true,
+                            email: true,
+                            phone: true,
+                        },
+                    },
+                    service: true,
+                    technician: {
+                        select: {
+                            technicianId: true,
+                            user: {
+                                select: {
+                                    name: true,
+                                    email: true,
+                                },
+                            },
+                        },
+                    },
+                },
+            }),
+        ]);
+
+    const totalRevenue = completedBookings.reduce(
+        (sum, b) => sum + Number(b.service?.price || 0),
+        0
+    );
+
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Admin overview fetched",
+        data: {
+            metrics: {
+                totalCustomers: totalUsers,
+                totalTechnicians,
+                totalBookings,
+                completedJobs: completedBookings.length,
+                totalRevenue,
+            },
+            recentBookings,
+        },
+    });
+});
+
 export const adminController = {
     getAllUsers,
     userStatusUpdate,
     allCategories,
     createCategory,
-    getAllBookings
+    getAllBookings,
+    getOverviewStats
 }

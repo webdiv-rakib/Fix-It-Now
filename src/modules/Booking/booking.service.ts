@@ -85,6 +85,7 @@ const getAllServices = async (customerId: string, filter?: { status?: BookingSta
                     },
                 },
             },
+            review: true
         },
         orderBy: {
             createdAt: "desc",

@@ -52,8 +52,31 @@ const getAllTechnicians = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const getServiceById = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const result = await serviceService.getServiceById(id as string);
+
+  if (!result) {
+    return sendResponse(res, {
+      statusCode: 404,
+      success: false,
+      message: "Service not found",
+      data: null,
+    });
+  }
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Service fetched successfully",
+    data: result,
+  });
+});
+
 export const serviceController = {
     createService,
     getAllServices,
-    getAllTechnicians
+    getAllTechnicians,
+    getServiceById
 }
