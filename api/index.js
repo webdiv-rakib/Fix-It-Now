@@ -1182,9 +1182,9 @@ var serviceController = {
 // src/modules/Service/service.routes.ts
 var router4 = Router4();
 router4.get("/", serviceController.getAllServices);
-router4.get("/:id", serviceController.getServiceById);
-router4.get("/all-technician", serviceController.getAllTechnicians);
+router4.get("/all-technicians", serviceController.getAllTechnicians);
 router4.post("/create-service", auth(Role.TECHNICIAN), serviceController.createService);
+router4.get("/:id", serviceController.getServiceById);
 var serviceRoutes = router4;
 
 // src/modules/Booking/booking.routes.ts
